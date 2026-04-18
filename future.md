@@ -62,3 +62,27 @@ Bootstrapped from `/Users/aleksandrvolkov/2/` (Sun-Jupiter L₂ halo project) as
 - Repo: `github.com/cornada/earth-moon-l2-halo`
 - Live demo: `cornada.github.io/earth-moon-l2-halo/`
 - Sister project: `github.com/cornada/sun-jupiter-l2-halo`
+
+---
+
+## Session 2026-04-17 (part II — polish and parking)
+
+### What was done
+1. **Author renamed** in `report.tex`: `A.~Volkov` → `I.~Gabitov`. Recompiled; PDF title page verified via `pdftotext`.
+2. **Standalone demo.** Inlined the ~770 KB `web_data.json` into `demo.html` via `inline_demo.py`. Now opens by double-click on `file://` without an HTTP server. Propagated to `docs/demo.html` and `docs/index.html`.
+3. **Dynamic camera distance.** Replaced fixed `R = 0.08` in `setCamera()` with orbit-extent-scaled framing: `R = max(0.04, 3.5·orbitExtent.rmax)`. Fixes the user complaint that Earth-Moon halos required manual zoom-out. Camera target also lifts slightly off-ecliptic for northern halos.
+4. **Parked.** Project included in the combined zip `/Users/aleksandrvolkov/l2-halo-orbits.zip` alongside the Sun-Jupiter sister project.
+
+### Insights
+
+1. **Orbit amplitude varies 2× between systems.** Sun-Jupiter halo amplitude ~0.015, Earth-Moon ~0.037. A fixed camera-distance preset tuned for one will visually fail on the other. The general lesson: any data-parametrized viewer must scale its view presets with the data, not the frame of reference.
+
+2. **Clarifications worth capturing** (surfaced from the user's questions):
+   - Planet radii in the demo are artificially inflated ~1500× for visibility; actual Moon is sub-pixel at orbit scale.
+   - Earth and Moon are stationary in our rotating frame by construction; the frame co-rotates with the lunar orbit.
+   - The orbit is a time-parameterized curve U(t), not a snapshot — the slider scrubs along it; the perturbation simulator is a live RK4 in-browser.
+   - Sun is NOT included — the CR3BP is Earth-Moon only. Sun's tidal perturbation at Earth-Moon L₂ ≈ 1.5% of Earth's gravity, causing ~1000 km yearly drift of effective L₂, ~3× larger ΔV budget than pure-CR3BP for multi-year ops. To include Sun: BCR4BP or ephemeris.
+
+### Files in final state
+- `/Users/aleksandrvolkov/earth-moon-l2/` — fully pushed to `cornada/earth-moon-l2-halo` main.
+- Zip: `/Users/aleksandrvolkov/l2-halo-orbits.zip` (19.6 MB, both projects).
